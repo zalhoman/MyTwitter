@@ -49,8 +49,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("Conexao passou", "Usuário conectado" + user.getEmail());
                     Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
                     startActivity(i);
-                    campoEmail.setText("");
-                    campoSenha.setText("");
                 } else {
                     Log.e("Falha Conexão", "Não há usuários conectados");
                 }
@@ -85,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e("Erro Cadastrar", "Erro ao cadastrar usuario");
                 } else {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference reference = database.getReference();
+                    DatabaseReference reference = database.getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     reference.child("email").setValue(campoEmail.getText().toString());
                     reference.child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 }
